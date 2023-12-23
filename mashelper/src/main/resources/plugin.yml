@@ -5,14 +5,17 @@ description: A helper plugin for the Mine and Seek project with various utilitie
 api-version: '1.20'
 author: LordKanelsnegle
 website: https://github.com/LordKanelsnegle/MaSPlugin
+libraries:
+  - com.github.shynixn.structureblocklib:structureblocklib-bukkit-api:2.13.0
+  - com.github.shynixn.structureblocklib:structureblocklib-bukkit-core:2.13.0
 commands:
   pull:
     description: Runs a script to pull updates to the MaS datapack.
-    usage: /<command>
+    usage: 'Correct usage: /<command>'
     permission: mashelper.admin
     permission-message: You don't have permission.
   save:
     description: Save the structures in the build area.
-    usage: /<command> <map-name>
+    usage: 'Correct usage: /<command> <map-name>'
     permission: mashelper.builder
     permission-message: You don't have permission.
