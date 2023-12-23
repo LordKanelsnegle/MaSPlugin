@@ -13,6 +13,6 @@ commands:
     permission-message: You don't have permission.
   save:
     description: Save the structures in the build area.
-    usage: /<command> <name>
+    usage: /<command> <map-name>
     permission: mashelper.builder
     permission-message: You don't have permission.
