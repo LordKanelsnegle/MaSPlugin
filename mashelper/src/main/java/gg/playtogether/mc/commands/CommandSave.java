@@ -23,7 +23,7 @@ public class CommandSave implements CommandExecutor {
     private final World world;
     private final Location[] locations;
     private HashMap<UUID,String> pendingSaves;
-    private int counter = 0;
+    private HashMap<UUID,Integer> saveCounters;
 
     public CommandSave(Plugin plugin, StructureBlockLibApi structureBlockLibApi) {
         this.plugin = plugin;
@@ -36,6 +36,7 @@ public class CommandSave implements CommandExecutor {
             new Location(world, 1004, 19, 1002),
         };
         pendingSaves = new HashMap<UUID,String>();
+        saveCounters = new HashMap<UUID,Integer>();
     }
     
     @Override
@@ -54,6 +55,7 @@ public class CommandSave implements CommandExecutor {
                 if (pendingSaves.keySet().contains(player.getUniqueId())) {
                     String map = pendingSaves.get(player.getUniqueId());
                     player.sendMessage("Saving all 4 quadrants of " + map + "...");
+                    saveCounters.put(player.getUniqueId(), 0);
                     for (int i = 0; i < 4; i++) {
                         String structure = map + Integer.toString(i + 1);
                         structureBlockLibApi
@@ -95,13 +97,15 @@ public class CommandSave implements CommandExecutor {
 
     private void checkSaveCompleted(Player player, String structure) {
         player.sendMessage("" + ChatColor.GREEN + "Saved structure '" + structure + "'.");
-        counter++;
-        if (counter == 4) {
-            counter = 0;
+        int count = saveCounters.get(player.getUniqueId());
+        count++;
+        if (count == 4) {
+            count = 0;
             player.sendMessage("Reloading structure data...");
             Bukkit.reloadData();
             player.sendMessage("" + ChatColor.GREEN + "Structure data up-to-date.");
         }
+        saveCounters.put(player.getUniqueId(), count);
     }
 }
  
