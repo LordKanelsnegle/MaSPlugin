@@ -23,9 +23,9 @@ public class CommandPull implements CommandExecutor {
             if (!output.isEmpty()) {
                 sender.sendMessage("Datapack updated. Attempting to reload...");
                 Bukkit.reloadData();
-                sender.sendMessage("[MaSHelper] " + ChatColor.GREEN + "Datapack reloaded successfully.");
+                sender.sendMessage("" + ChatColor.GREEN + "Datapack reloaded successfully.");
             } else {
-                sender.sendMessage("[MaSHelper] Already up to date.");
+                sender.sendMessage("Already up to date.");
             }
         } catch (Exception ex) {
             Bukkit.getLogger().severe(ex.getMessage());
