@@ -23,6 +23,7 @@ public class CommandSave implements CommandExecutor {
     private final World world;
     private final Location[] locations;
     private HashMap<UUID,String> pendingSaves;
+    private int counter = 0;
 
     public CommandSave(Plugin plugin, StructureBlockLibApi structureBlockLibApi) {
         this.plugin = plugin;
@@ -65,7 +66,7 @@ public class CommandSave implements CommandExecutor {
                             .restriction(StructureRestriction.SINGLE_48)
                             .saveToWorld(world.getName(), "mas", structure)
                             .onException(c -> c.printStackTrace())
-                            .onResult(e -> player.sendMessage("" + ChatColor.GREEN + "Saved structure '" + structure + "'."));
+                            .onResult(e -> checkSaveCompleted(player, structure));
                     }
                     pendingSaves.remove(player.getUniqueId());
                 } else {
@@ -90,6 +91,17 @@ public class CommandSave implements CommandExecutor {
         }
 
         return false;
+    }
+
+    private void checkSaveCompleted(Player player, String structure) {
+        player.sendMessage("" + ChatColor.GREEN + "Saved structure '" + structure + "'.");
+        counter++;
+        if (counter == 4) {
+            counter = 0;
+            player.sendMessage("Reloading structure data...");
+            Bukkit.reloadData();
+            player.sendMessage("" + ChatColor.GREEN + "Structure data up-to-date.");
+        }
     }
 }
  
